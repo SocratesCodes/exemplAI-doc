@@ -1,3 +1,87 @@
 @use "./variables.scss" as *;
 
 // put your custom CSS here!
+
+/* 1. Prevent active custom tasks (Question, Important, etc.) from being crossed or grayed out */
+article li[data-task]:not([data-task="x"]):not([data-task="-"]):has(> input[type="checkbox"]:checked) {
+  text-decoration: none;
+  color: var(--dark);
+}
+
+/* 2. Format all checklist inputs as clean circular icons rather than square checkboxes */
+li.task-list-item > input[type="checkbox"] {
+  border: none !important;
+  background-color: transparent !important;
+  border-radius: 50% !important;
+  width: 16px !important;
+  height: 16px !important;
+  background-size: contain !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  appearance: none !important;
+  margin-inline-start: -1.4rem !important;
+  margin-inline-end: 0.4rem !important;
+  transform: translateY(3px) !important;
+  cursor: pointer;
+  
+  &::after {
+    display: none !important; /* Hide default checkmark */
+  }
+}
+
+/* Standard Unchecked [ ] - Circle outline */
+li[data-task=" "] > input[type="checkbox"],
+li:not([data-task]) > input[type="checkbox"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b8b8b8' stroke-width='3'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3C/svg%3E") !important;
+}
+
+/* Standard Checked [x] - Filled circle with checkmark */
+li[data-task="x"] > input[type="checkbox"],
+li:not([data-task]) > input[type="checkbox"]:checked {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10' fill='%23284b63' stroke='%23284b63' stroke-width='2'/%3E%3Cpolyline points='17 9 11 15 7 11' stroke='%23faf8f8' stroke-width='3'/%3E%3C/svg%3E") !important;
+}
+
+/* Question [?] - Yellow circle with question mark */
+li[data-task="?"] > input[type="checkbox"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e2b714' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3'/%3E%3Cline x1='12' y1='17' x2='12.01' y2='17'/%3E%3C/svg%3E") !important;
+}
+
+/* Important [!] - Red circle with exclamation */
+li[data-task="!"] > input[type="checkbox"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e74c3c' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cline x1='12' y1='7' x2='12' y2='13'/%3E%3Cline x1='12' y1='17' x2='12.01' y2='17'/%3E%3C/svg%3E") !important;
+}
+
+/* Forwarded [>] - Blue circle with chevron */
+li[data-task=">"] > input[type="checkbox"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233498db' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpolyline points='10 16 14 12 10 8'/%3E%3C/svg%3E") !important;
+}
+
+/* In progress [/] - Orange circle with left half-filled (WIP) */
+li[data-task="/"] > input[type="checkbox"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e67e22' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12,2A10,10,0,0,0,12,22Z' fill='%23e67e22'/%3E%3C/svg%3E") !important;
+}
+
+/* Cancelled [-] - Gray circle with horizontal minus */
+li[data-task="-"] > input[type="checkbox"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238a8a8a' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cline x1='7' y1='12' x2='17' y2='12'/%3E%3C/svg%3E") !important;
+}
+
+/* Special [s] - Purple circle with filled star */
+li[data-task="s"] > input[type="checkbox"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239b59b6' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpolygon points='12,6 13.5,10 17.5,10.5 14.5,13.5 15.5,17.5 12,15.5 8.5,17.5 9.5,13.5 6.5,10.5 10.5,10' fill='%239b59b6'/%3E%3C/svg%3E") !important;
+}
+
+/* 4. Dark Mode overrides for branding colors and borders */
+[saved-theme="dark"] {
+  /* Dark Mode Unchecked Circle */
+  li[data-task=" "] > input[type="checkbox"],
+  li:not([data-task]) > input[type="checkbox"] {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23646464' stroke-width='3'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3C/svg%3E") !important;
+  }
+
+  /* Dark Mode Checked Circle (uses secondary dark-brand color #7b97aa and dark background fill) */
+  li[data-task="x"] > input[type="checkbox"],
+  li:not([data-task]) > input[type="checkbox"]:checked {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10' fill='%237b97aa' stroke='%237b97aa' stroke-width='2'/%3E%3Cpolyline points='17 9 11 15 7 11' stroke='%23161618' stroke-width='3'/%3E%3C/svg%3E") !important;
+  }
+}
