@@ -21,3 +21,4 @@ Ensure that both server and judge0 is up and running.
 In web directory, copy `.env.example` to .env, and configures the following variables:
 
 - `VITE_BACKEND_URL` - URL of backend server. Defaults to local development.
+- `VITE_TRUSTED_ORIGINS` - URLs of trusted domain for callback - useful for security - A comma-separated list of trusted external origins allowed for redirects (e.g., https://anotherapp.com,https://yetanotherapp.com)
